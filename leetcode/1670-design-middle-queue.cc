@@ -1,3 +1,6 @@
+// https://leetcode.com/problems/design-front-middle-back-queue/
+// Medium
+
 #include<list>
 #include<iostream>
 using namespace std;
