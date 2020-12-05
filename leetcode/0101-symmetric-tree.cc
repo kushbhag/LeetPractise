@@ -40,13 +40,15 @@ public:
             if ((a == nullptr && b != nullptr) || 
                 (a != nullptr && b == nullptr)) {
                 return false;
-            } else if (a && b && a->val == b->val) {
-                queue.push_back(a->left);
-                queue.push_back(b->right);
-                queue.push_back(a->right);
-                queue.push_back(b->left);
-                queue.pop_front();
-                queue.pop_front();
+            } else if (a && b) {
+                if (a->val == b->val) {
+                    queue.push_back(a->left);
+                    queue.push_back(b->right);
+                    queue.push_back(a->right);
+                    queue.push_back(b->left);
+                } else {
+                    return false;
+                }  
             }
         }
         return true;
