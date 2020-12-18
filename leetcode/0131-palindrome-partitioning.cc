@@ -55,6 +55,7 @@ public:
 };
 
 // Using Recursion
+// Slower because it doesn't use memory
 class Solution {
     int len;
     bool isPalindrome(string s) {
