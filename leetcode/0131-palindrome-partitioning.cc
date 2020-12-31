@@ -54,6 +54,52 @@ public:
     }
 };
 
+// Dynamic Programming
+class Solution {
+    int len;
+    vector<vector<bool>> v;
+    void partitionRec(string s, int start, vector<string>& temp, vector<vector<string>>& ret) {
+        //cout << start;
+        if (start >= len) {
+            ret.push_back(temp);
+            return;
+        }
+        for (int i = start; i < len; ++i) {
+            if (v[start][i]) {
+                temp.push_back(s.substr(start, i-start+1));
+                //cout << s.substr(start, i-start+1) << endl;
+                partitionRec(s, i+1, temp, ret);
+                temp.pop_back();
+            }
+        }
+    }
+public:
+    vector<vector<string>> partition(string s) {
+        len = s.length();
+        v = vector<vector<bool>> (len+1, vector<bool> (len, false));
+        int hi;
+        for (int j = 0; j < len; ++j) {
+            for (int i = 0; i+j < len; ++i) {
+                hi = i+j;
+                if (s[i] == s[hi] && (j <= 1 || v[i+1][hi-1])) {
+                    //cout << i << " " << hi << endl;
+                    v[i][hi] = true;
+                }
+            }
+        }
+        // for (int i = 0; i < len; ++i) {
+        //     for (int j = 0; j < len; ++j) {
+        //         cout << v[i][j] << " ";
+        //     }
+        //     cout << endl;
+        // }
+        vector<string> temp;
+        vector<vector<string>> ret;
+        partitionRec(s, 0, temp, ret);
+        return ret;
+    }
+};
+
 // Using Recursion
 // Slower because it doesn't use memory
 class Solution {
