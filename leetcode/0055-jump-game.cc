@@ -8,14 +8,11 @@ using namespace std;
 class Solution {
 public:
     bool canJump(vector<int>& nums) {
-        int max = 0;
-        for (int i = 0; i < nums.size(); ++i) {
-            if (max + 1 >= nums.size()) {
-            return true;
-            } else if (nums[i] == 0 && max <= i) {
-                return false;
-            }
-            max = i + nums[i] > max ? i + nums[i] : max;
+        int maxSoFar = nums[0], size = nums.size();
+        for (int i = 0; i < size; ++i) {
+            if (maxSoFar >= size-1) return true;
+            if (i > maxSoFar) return false;
+            maxSoFar = maxSoFar < i + nums[i] ? i + nums[i] : maxSoFar;
         }
         return false;
     }
