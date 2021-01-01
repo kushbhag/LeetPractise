@@ -21,3 +21,20 @@ public:
         return gain;
     }
 };
+
+// Dynamic Programming Solution
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int currBuyMax = INT_MIN, currSellMin = 0;
+        int prevBuyMax, prevSellMin;
+        for (int &n: prices) {
+            prevBuyMax = currBuyMax;
+            prevSellMin = currSellMin;
+
+            currBuyMax = max(prevBuyMax, prevSellMin - n);
+            currSellMin  = max(prevSellMin, prevBuyMax + n);
+        }
+        return currSellMin;
+    }
+};
