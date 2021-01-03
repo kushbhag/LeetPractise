@@ -18,3 +18,19 @@ public:
         return v[n];
     }
 };
+
+// Constant space
+class Solution {
+public:
+    int climbStairs(int n) {
+        if (n == 1) return 1;
+        int prev = 2, prevprev = 1;
+        int curr;
+        for (int i = 3; i <= n; ++i) {
+            curr = prev + prevprev;
+            prevprev = prev;
+            prev = curr;
+        }
+        return prev;
+    }
+};
