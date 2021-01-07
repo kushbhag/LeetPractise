@@ -7,13 +7,11 @@ using namespace std;
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
-        int p = 0, max = nums[0], size = nums.size(), tempCount = 0;
-        while (p++ < size) {
-            tempCount = tempCount + nums[p] < nums[p] ? nums[p] : tempCount + nums[p];
-            if (tempCount > max){
-                max = tempCount;
-            }
+        int maxSoFar = nums[0], size = nums.size(), curr = max(nums[0], 0);
+        for (int i = 1; i < size; ++i) {
+            maxSoFar = max(maxSoFar, curr + nums[i]);
+            curr = max(curr+nums[i], 0);
         }
-        return max;
+        return maxSoFar;
     }
 };
