@@ -18,40 +18,37 @@ struct ListNode {
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        int difference = 0 ;
-        ListNode* headFirst = headA;
-        ListNode* headSecond = headB;
+        int len1 = 1, len2 = 1;
+        if (!headA || !headB) return nullptr;
+        ListNode* tempHeadA = headA;
+        ListNode* tempHeadB = headB;
         while (headA->next || headB->next) {
-            if (headA->next == nullptr) {
-                ++difference;
-                headB = headB->next;
-            } else if (headB->next == nullptr) {
-                --difference;
+            if (headA->next) {
+                ++len1;
                 headA = headA->next;
-            } else if (headA == headB) {
-                return headA;
-            } else {
-                headA = headA->next;
+            }
+            if (headB->next) {
+                ++len2;
                 headB = headB->next;
             }
         }
         if (headA != headB) {
             return nullptr;
         }
-        if (difference < 0) {
-            ListNode* temp = headFirst;
-            headFirst = headSecond;
-            headSecond = temp;
-            difference *= -1;
+        while(len1 > len2) {
+            tempHeadA = tempHeadA->next;
+            --len1;
         }
-        for (int i = 0; i < difference; ++i) {
-            headSecond = headSecond->next;
+        while(len2 > len1) {
+            tempHeadB = tempHeadB->next;
+            --len2;
         }
-        while (headFirst && headSecond) {
-            if (headFirst == headSecond) return headFirst;
-            headFirst = headFirst->next;
-            headSecond = headSecond->next;
+
+        for (int i = 0; i < len1; ++i) {
+            if (tempHeadA == tempHeadB) return tempHeadB;
+            tempHeadB = tempHeadB->next;
+            tempHeadA = tempHeadA->next;
         }
-        return headSecond;
+        return nullptr;
     }
 };
