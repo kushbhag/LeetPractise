@@ -9,17 +9,23 @@ using namespace std;
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
-        vector<int> memo (amount+1, -1);
-        memo[0] = 0;
+        if (amount == 0) return 0;
+        vector<int> v (amount+1, -1);
+        int temp;
         for (int i = 1; i <= amount; ++i) {
-            int minCoins = INT_MAX;
-            for (int &c: coins) {
-                if (i-c >= 0 && memo[i-c] != -1) {
-                    minCoins = memo[i-c] + 1 < minCoins ? memo[i-c] + 1 : minCoins;
+            temp = INT_MAX;
+            for (int &n: coins) {
+                if (n-i == 0) {
+                    temp = 1;
+                    break;
+                } 
+                if (i-n > 0 && v[i-n] != -1) {
+                    temp = min(temp, v[i-n] + 1);
                 }
             }
-            if (minCoins != INT_MAX) memo[i] = minCoins;
+            v[i] = temp == INT_MAX ? -1 : temp;
+            //cout << i << ' ' << v[i] << endl;
         }
-        return memo[amount];
+        return v[amount];
     }
 };
