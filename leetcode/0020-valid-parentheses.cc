@@ -8,22 +8,20 @@ using namespace std;
 class Solution {
 public:
     bool isValid(string s) {
-        vector<char> stack;
-        char top;
+        vector<char> v;
         for (char &c: s) {
             if (c == '(') {
-                stack.push_back(')');
+                v.push_back(')');
             } else if (c == '[') {
-                stack.push_back(']');
+                v.push_back(']');
             } else if (c == '{') {
-                stack.push_back('}');
+                v.push_back('}');
+            } else if (v.size() == 0 || v.back() != c) {
+                return false;
             } else {
-                if (stack.empty() || stack.back() != c) {
-                    return false;
-                }
-                stack.pop_back();
+                v.pop_back();
             }
         }
-        return stack.empty();
+        return v.size() == 0;
     }
 };
