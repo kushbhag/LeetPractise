@@ -8,18 +8,20 @@
 using namespace std;
 
 class Solution {
-public:
-    vector<string> generateParenthesis(int n) {
-        vector<string> s;
-        generateParenthesisNum(s, n, 0, "");
-        return s;
-    }
-    void generateParenthesisNum(vector<string>& ret, int n, int remaining, string s) {
+    void generateParenthesisRec(int n, int remaining, string s, vector<string>& ret) {
         if (n == 0 && remaining == 0) {
             ret.push_back(s);
             return;
         }
-        if (n > 0) generateParenthesisNum(ret, n-1, remaining-1, s+")");
-        if (remaining > 0) generateParenthesisNum(ret, n, remaining+1, "("s);
+        if (remaining > 0) generateParenthesisRec(n, remaining-1, s+")", ret);
+        if (n > 0) generateParenthesisRec(n-1, remaining+1, s+"(", ret);
+        
+    }
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> ret;
+        string s = "";
+        generateParenthesisRec(n, 0, s, ret);
+        return ret;
     }
 };
