@@ -23,3 +23,18 @@ public:
         return true;
     }
 };
+
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if (x < 0) return false;
+        int y = x;
+        int sum = 0;
+        while (x > 0) {
+            if (sum > INT_MAX / 10) return false;
+            sum = (sum*10) + x%10;
+            x /= 10;
+        }
+        return y == sum;
+    }
+};
