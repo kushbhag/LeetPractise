@@ -21,3 +21,33 @@ public:
         return count;
     }
 };
+
+class Solution1 {
+public:
+    int numSubarrayProductLessThanK(vector<int>& nums, int k) {
+        int size = nums.size();
+        int total = 0;
+        for (int&n : nums) {
+            total = n < k ? total+1 : total;
+        }
+        int lo = 0, hi = 1;
+        int product = nums[0];
+        while (hi < size) {
+            if (lo == hi) {
+                ++hi;
+                product *= nums[lo];
+            } else if (product*nums[hi] < k) {
+                product *= nums[hi];
+                total += (hi-lo-1) + 1;
+                ++hi;
+            } else {
+                product /= nums[lo];
+                ++lo;
+            }
+            
+        }
+        
+        //total += max (size - lo - 2, 0);
+        return total;
+    }
+};
