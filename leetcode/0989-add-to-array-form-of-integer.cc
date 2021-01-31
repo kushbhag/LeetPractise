@@ -8,16 +8,18 @@ using namespace std;
 class Solution {
 public:
     vector<int> addToArrayForm(vector<int>& A, int K) {
-        int m, carry = 0;
+        int m, carry = 0, temp;
+        vector<int> ret;
         for (int i = A.size() - 1; i >= 0; --i) {
             m = K % 10;
-            A[i] += carry + m;
-            if (A[i] >= 10) {
-                A[i] -= 10;
+            temp = A[i] + carry + m;
+            if (temp >= 10) {
+                temp -= 10;
                 carry = 1;
             } else {
                 carry = 0;
             }
+            ret.push_back(temp);
             K/=10;
         }
         if (K > 0) {
@@ -29,13 +31,14 @@ public:
                 } else {
                     carry = 0;
                 }
-                A.insert(A.begin(), m);
+                ret.push_back(m);
                 K /= 10;
             }
         }
         if (carry == 1) {
-            A.insert(A.begin(), carry);
+            ret.push_back(1);
         }
-        return A;
+        reverse(ret.begin(), ret.end());
+        return ret;
     }
 };
