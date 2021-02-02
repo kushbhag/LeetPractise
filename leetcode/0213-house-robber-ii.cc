@@ -26,3 +26,19 @@ public:
         return max (first, second);
     }
 };
+
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int size = nums.size();
+        vector<int> mem1 (size+2, 0);
+        vector<int> mem2 (size+2, 0);
+        mem1[2] = nums[0];
+        for (int i = 1; i < size-1; ++i) {
+            mem1[i+2] = max(mem1[i+1], nums[i] + mem1[i]);
+            mem2[i+2] = max(mem2[i+1], nums[i] + mem2[i]);
+        }
+        mem2[size+1] = max(mem2[size], nums[size-1] + mem2[size-1]);
+        return max(mem1[size], mem2[size+1]);
+    }
+};
