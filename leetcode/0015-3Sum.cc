@@ -11,6 +11,36 @@ using namespace std;
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> ret;
+        sort(nums.begin(), nums.end());
+        
+        int size = nums.size();
+
+        for (int i = 0; i < size;) {
+            int lo = i+1;
+            int hi = size-1;
+
+            while (lo < hi) {
+                int sum = nums[lo] + nums[hi] + nums[i];
+                if (sum < 0) {
+                    ++lo;
+                } else if (sum > 0) {
+                    --hi;
+                } else {
+                    ret.push_back({nums[i], nums[lo], nums[hi]});
+                    ++lo;
+                    while (lo < hi && nums[lo] == nums[lo-1]) ++lo;
+                }
+            }
+            ++i;
+            while (i > 0 && i < size && nums[i] == nums[i-1]) ++i;
+        }
+        return ret;
+    }
+};
+class Solution1 {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
         vector<vector<int>> v;
         sort(nums.begin(), nums.end());
         int size = nums.size();
