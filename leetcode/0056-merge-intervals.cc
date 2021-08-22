@@ -7,28 +7,24 @@ using namespace std;
 
 
 class Solution {
+    static bool compare(vector<int>& v1, vector<int>& v2) {
+        return v1[0] < v2[0];
+    }
 public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
-        // I could've optimized more by sorting it first and then merging the intervals
+        sort(intervals.begin(), intervals.end(), compare);
+        vector<int> currInterval = intervals[0];
         vector<vector<int>> ret;
-        if (intervals.empty()) return intervals;
         int size = intervals.size();
-
-        for (int i = 0; i < size; ++i) {
-            if (ret.empty()) ret.push_back(intervals[i]);
-            else {
-                vector<int> temp = intervals[i];
-                for (int j = 0; j < ret.size(); ++j) {
-                    if ((ret[j][0] >= temp[0]  && ret[j][0] <= temp[1]) || 
-                        (temp[0] >= ret[j][0]  && temp[0] <= ret[j][1])) {
-                        temp = vector<int> { min(temp[0], ret[j][0]), max(temp[1], ret[j][1])};
-                        ret[j] = temp;
-                        ret.erase(ret.begin() + j--);
-                    }
-                }
-                ret.push_back(temp);
+        for (int i = 1; i < size; ++i) {
+            if (intervals[i][0] <= currInterval[1]) {
+                currInterval[1] = max(currInterval[1], intervals[i][1]);
+            } else {
+                ret.push_back(currInterval);
+                currInterval = intervals[i];
             }
         }
+        ret.push_back(currInterval);
         return ret;
     }
 };
