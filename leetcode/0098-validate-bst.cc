@@ -16,23 +16,17 @@ struct TreeNode {
 };
 
 // Solution is better cause you can simply just do an inorder traversal
-class SlowerSolution {
-    void inorderTraversal(TreeNode* root, vector<int>& v) {
-        if (root) {
-            inorderTraversal(root->left, v);
-            v.push_back(root->val);
-            inorderTraversal(root->right, v);
-        }
-    }
+class InorderTraversalSolution {
+    long lastNum = LONG_MIN;
 public:
     bool isValidBST(TreeNode* root) {
-        vector<int> v;
-        inorderTraversal(root, v);
-        for (int i = 0; i < v.size() - 1; ++i) {
-            if (v[i] >= v[i+1]) {
-                return false;
-            }
-        }
+        if (!root) return true;
+        if (!isValidBST(root->left)) return false;
+
+        if (root->val <= lastNum) return false;
+        lastNum = root->val;
+
+        if (!isValidBST(root->right)) return false;
         return true;
     }
 };
