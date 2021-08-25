@@ -25,7 +25,27 @@ struct TreeNode {
 
 using namespace std;
 
-class Solution {
+class IterativeSolution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> ret;
+        vector<pair<TreeNode*, int>> stack;
+        stack.push_back({root, 0});
+        while (!stack.empty()) {
+            pair<TreeNode*, int> p = stack.back();
+            stack.pop_back();
+            if (!p.first) continue;
+            if (ret.size() < p.second+1) ret.push_back({});
+            
+            ret[p.second].push_back(p.first->val);
+            stack.push_back({p.first->right, p.second+1});
+            stack.push_back({p.first->left, p.second+1});
+        }
+        return ret;
+    }
+};
+
+class RecursiveSolution {
     void levelOrderRec(TreeNode* root, vector<vector<int>>& ret, int level) {
         if (!root) return;
         if (ret.size() <= level) {
