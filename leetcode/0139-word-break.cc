@@ -8,6 +8,26 @@
 
 using namespace std;
 
+class DPSolution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        int len = s.length();
+        vector<bool> v (len, false);
+        for (int i = len-1; i >= 0; --i) {
+            for (string &w: wordDict) {
+                int slen = w.length();
+                if (w == s.substr(i, slen)) {
+                    if (i + slen >= len || v[i+slen]) {
+                        v[i] = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return v[0];
+    }
+};
+
 class Solution {
     bool wordBreakMemo(string s, vector<string>& wordDict, unordered_map<string, bool>& m) {
         if (s.empty()) return true;
