@@ -19,33 +19,21 @@ struct TreeNode {
 };
 
 class Solution {
+    int ret;
+    // If k == 0 then return true
+    bool kthSmallestRec(TreeNode* root, int& k) {
+        if (!root) return false;
+        if (kthSmallestRec(root->left, k)) return true;
+        --k;
+        if (k == 0) {
+            ret = root->val;
+            return true;
+        }
+        return kthSmallestRec(root->right, k);
+    }
 public:
     int kthSmallest(TreeNode* root, int& k) {
-        int x = 0;
-        if (k == 1 && root->left == nullptr) {
-            k = 0;
-            return root->val;
-        } else if (root->left == nullptr && root->right == nullptr) {
-            k--;
-            return root->val;
-        }
-        if (root->left) {
-            x = kthSmallest(root->left, k);
-            if (k == 0) {
-                return x;
-            }
-        }
-        if (k == 1) {
-            k = 0;
-            return root->val;
-        }
-        k --;
-        if (root->right) {
-            x = kthSmallest(root->right, k);
-            if (k == 0) {
-                return x;
-            }
-        }
-        return x;
+        kthSmallestRec(root, k);
+        return ret;
     }
 };
