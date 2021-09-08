@@ -25,3 +25,33 @@ public:
         return count;
     }
 };
+
+// O(n^2) and O(1) space
+class Solution1 {
+public:
+    int countSubstrings(string s) {
+        int lo = 0, hi = 0, count = 0;
+        int len = s.length();
+        for (int i = 0; i < len-1; ++i) {
+            lo = i;
+            hi = i;
+            while (lo >= 0 && hi < len) {
+                if (s[lo] == s[hi]) {
+                    ++count;
+                } else break;
+                --lo;
+                ++hi;
+            }
+            lo = i;
+            hi = i+1;
+            while (lo >= 0 && hi < len) {
+                if (s[lo] == s[hi]) {
+                    ++count;
+                } else break;
+                --lo;
+                ++hi;
+            }
+        }
+        return count+1;
+    }
+};
