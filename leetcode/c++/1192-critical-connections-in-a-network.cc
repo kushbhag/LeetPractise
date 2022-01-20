@@ -19,7 +19,7 @@ class Solution {
                 lowestId(next, curr);
                 low[curr] = min(low[curr], low[next]);  // Set your low to the min of your low or it's
             } else if (next != prev) {  // Assuming you are not the previosu node
-                low[curr] = min(low[curr], discovery[next]); // Set your low to min of yourself of discovery of next
+                low[curr] = min(low[curr], discovery[next]); // Set your low to min of yourself or discovery of next
             }
             if (discovery[curr] < low[next]) {  // If your discovery time is less than the low of next, then there was
                                                 //   no loop to circle back around, hence it is a bridge
