@@ -1,6 +1,12 @@
 # https://leetcode.com/problems/search-in-rotated-sorted-array/
 # Medium
 
+# Check if nums[lo] <= nums[mid]
+#   Then check if target is between nums[lo] and nums[mid]
+#   And reduce hi accordingly
+# Else
+#   Check if target is between nums[mid] and nums[hi]
+#   If it is then increase lo accordingly
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         lo, hi = 0, len(nums) - 1
